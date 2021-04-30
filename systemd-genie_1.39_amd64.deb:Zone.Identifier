@@ -1,0 +1,4 @@
+[ZoneTransfer]
+ZoneId=3
+ReferrerUrl=https://github.com/arkane-systems/genie/releases/tag/v1.39
+HostUrl=https://github-releases.githubusercontent.com/192089662/cc70bc80-a39f-11eb-8e0e-9cc9d84a110f?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAIWNJYAX4CSVEH53A%2F20210425%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20210425T120524Z&X-Amz-Expires=300&X-Amz-Signature=7f8dea0bf0ba91697375efb9d17c8b7376c72adfd08d525e8cc6bea23cd41d93&X-Amz-SignedHeaders=host&actor_id=74767448&key_id=0&repo_id=192089662&response-content-disposition=attachment%3B%20filename%3Dsystemd-genie_1.39_amd64.deb&response-content-type=application%2Foctet-stream
