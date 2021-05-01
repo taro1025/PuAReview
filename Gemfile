@@ -33,6 +33,10 @@ group :development, :test do
   gem 'factory_bot_rails'
 end
 
+group :production do
+  gem 'unicorn', '5.4.1'
+end
+
 group :development do
   gem 'listen', '~> 3.3'
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
