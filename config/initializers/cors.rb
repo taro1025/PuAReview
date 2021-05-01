@@ -7,7 +7,7 @@
 
  Rails.application.config.middleware.insert_before 0, Rack::Cors do
   allow do
-    origins 'http://localhost:3001', 'http://pua-review-frontend.s3-website-ap-northeast-1.amazonaws.com'
+    origins 'http://localhost:3001', 'http://52.193.23.14'
     resource '*',
       headers: :any,
       methods: [:get, :post, :put, :patch, :delete, :options, :head],
