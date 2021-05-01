@@ -15,7 +15,7 @@
   end
 
   allow do
-    origins 'http://pua-review-frontend.s3-website-ap-northeast-1.amazonaws.com/'
+    origins 'http://pua-review-frontend.s3-website-ap-northeast-1.amazonaws.com'
     resource '*',
       headers: :any,
       methods: [:get, :post, :put, :patch, :delete, :options, :head],
