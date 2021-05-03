@@ -10,6 +10,7 @@ export const postLogin = (e, props) =>{
     },
     { withCredentials: true })
     .then(response => {
+      console.log(`login:`, response.data)
       if(response.data.logged_in){
         props.loginAction(props, response.data)
       }

@@ -1,5 +1,5 @@
 import './App.css';
-import React, {useState, useEffect } from 'react';
+import React, {useState, useEffect, createContext } from 'react';
 import {
   BrowserRouter as Router,
   Switch,
@@ -10,13 +10,17 @@ import {
 import Login from './components/auth/Login.jsx';
 import { Puas } from './containers/Puas.jsx';
 import { Reviews } from './containers/Reviews.jsx';
+import { Posts } from './containers/Posts.jsx';
 import { Header } from './components/Header.jsx';
 import  Registration from './components/auth/Registrations.js';
+import SelectPosts from './containers/SelectPosts.jsx';
 
 import { checkLoginStatus } from './apis/checkLoginStatus.jsx';
 
 import axios from 'axios'
 import { logged_in } from './urls/index';
+
+export const IsUserLoggedIn = createContext()
 
 function App() {
 
@@ -29,7 +33,7 @@ function App() {
   const [state, setDialogState] = useState(globalInitialState);
 
   const [loggedInStatus, setLoggedInStatus] = useState("未ログイン")
-  const [user, setUser] = useState({})
+  const [user, setUser] = useState(null)
 
   const loginAction = (props, data) => {
     //set State of Login
@@ -42,6 +46,7 @@ function App() {
   useEffect(() => {
     checkLoginStatus(loggedInStatus, setLoggedInStatus, setUser);
   })
+
 
   return (
     <Router>
@@ -83,16 +88,29 @@ function App() {
           <Puas/>
         </Route>
 
-        <Route
-          exact
-          path="/puas/:pua_id/reviews"
-          render={({match}) =>
-            <Reviews
-              match={match}
+        <IsUserLoggedIn.Provider value={user}>
 
-            />
-          }
-        />
+          <Route
+            exact
+            path="/puas/:pua_id/reviews"
+            render={({match}) =>
+              <SelectPosts
+                match={match}
+
+              />
+            }
+          />
+          <Route
+            exact
+            path="/puas/:pua_id/posts"
+            render={({match}) =>
+              <Posts
+                match={match}
+
+              />
+            }
+          />
+        </IsUserLoggedIn.Provider>
       </Switch>
 
 
@@ -101,4 +119,14 @@ function App() {
   );
 }
 
+          //<Route
+          //  exact
+          //  path="/puas/:pua_id/reviews"
+          //  render={({match}) =>
+          //    <Reviews
+          //      match={match}
+//
+          //    />
+          //  }
+          ///>
 export default App;

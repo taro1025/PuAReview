@@ -2,10 +2,16 @@ module Api
   module V1
     class PuasController < ApplicationController
       def index
+
         puas = Pua.all
 
+        reviewsCountSet = reviewsCountSet(puas)
+        reviewsAverageSet = reviewsAverageSet(puas)
+
         render json: {
-          puas: puas
+          puas: puas,
+          reviewsCountSet: reviewsCountSet,
+          reviewsAverageSet: reviewsAverageSet
         }, status: :ok
       end
 
@@ -27,6 +33,19 @@ module Api
           }, status: :ok
         else
           render json: {}, status: :no_content
+        end
+      end
+
+      private
+
+      def reviewsCountSet(puas)
+        puas.map{ |pua| pua.reviews.count }
+      end
+
+      def reviewsAverageSet(puas)
+        puas.map do |pua|
+          average = pua.reviews.average(:star)
+          average.floor(2) if average
         end
       end
 

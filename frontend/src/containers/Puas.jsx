@@ -14,7 +14,7 @@ import {
 import { Footer } from '../components/Footer.jsx';
 
 //urls
-import { Link } from "react-router-dom";
+import {TextLink} from '../components/links/links.jsx';
 
 //images
 import ManImage from '../images/1.jpg';
@@ -23,23 +23,19 @@ import WomanImage from '../images/0.jpg';
 //styles
 import styled from 'styled-components';
 import {COLORS, WRAPPER_SIZE, FONT_SIZE} from '../style_constants'
-
+import Rating from '@material-ui/lab/Rating';
+import SmsIcon from '@material-ui/icons/Sms';
 
 const PuaCard = styled.div`
   position: relative;
   height: ${WRAPPER_SIZE.CARD_HEIGHT};
   width: 375px;
-  margin-bottom: 5px;
-  border: 1px solid;
+  margin-bottom: 2px;
+  border: 0.2px solid;
   border-color: ${COLORS.BORDER};
   background-color: ${COLORS.CARD_COLOR};
 `;
 
-const CoverLink = styled(Link)`
-  position: absolute;
-  width: 100%;
-  height: 100%;
-`;
 
 const PuaImage = styled.img`
   height: ${WRAPPER_SIZE.CARD_HEIGHT};
@@ -65,8 +61,18 @@ const Star = styled.p`
   margin-left: 10px;
 `;
 
+const StarCountIcon = styled(SmsIcon)`
+  font-size: 12;
+  color: #9B9B9B;
+`;
 const StarCounter = styled.span`
-`
+  padding-left: 10px;
+`;
+
+const StarAverage = styled.span`
+  font-size:${FONT_SIZE.NAME_SIZE};
+  font-weight: bold;
+`;
 
 const Budget = styled.p`
   margin: initial;
@@ -77,6 +83,12 @@ export const Puas = () => {
 
   const [state, dispatch] = useReducer(puasReducer, initialState)
 
+  const puas = state.puas
+  console.log(`puas`,puas)
+
+  const reviewsCountSet = state.reviewsCountSet
+  const reviewsAverageSet = state.reviewsAverageSet
+
   useEffect(() =>{
     dispatch({ type: puasActionTypes.FETCHING });
     fetchPuas()
@@ -84,7 +96,9 @@ export const Puas = () => {
       dispatch({
         type: puasActionTypes.FETCH_SUCCESS,
         payload: {
-          puas: data.puas
+          puas: data.puas,
+          reviewsCountSet: data.reviewsCountSet,
+          reviewsAverageSet: data.reviewsAverageSet
         }
       })
     )
@@ -94,31 +108,43 @@ export const Puas = () => {
     <Fragment>
 
     講師一覧
+    <div>
+    { console.log(`puas:`,state.puas)}
     {
-    state.puasList.map(pua =>
 
-      <PuaCard>
-        {pua.sex == 1 ? (
-          <PuaImage src={ManImage} />
-        ) : (
-          <PuaImage src={WomanImage} />
-        )}
-        <TextWrapper>
-          <Name>{pua.name}</Name>
-          <Star>
-          ★★★★☆(仮)
-            {pua.countReview ?
-              (<StarCounter>{pua.countReview}</StarCounter>)
-              :
-              (<StarCounter>0</StarCounter>)}
-          </Star>
-          <Budget>平均予算 3,000,000円(仮)</Budget>
-        </TextWrapper>
-        <CoverLink to={`/puas/${pua.id}/reviews`}/>
-      </PuaCard>
+      puas.map((pua, i)=>
 
-    )
+        <PuaCard>
+          {pua.sex == 1 ? (
+            <PuaImage src={ManImage} />
+          ) : (
+            <PuaImage src={WomanImage} />
+          )}
+          <TextLink to={`/puas/${pua.id}/reviews`}>
+            <TextWrapper>
+              <Name>{pua.name}</Name>
+              <Star>
+              <Rating
+                name="customized-empty"
+                value={reviewsAverageSet[i]}
+                precision={0.5}
+
+              /><StarAverage>{reviewsAverageSet[i]}</StarAverage>
+                {reviewsCountSet[i] ?
+                  (<StarCounter><StarCountIcon/> {reviewsCountSet[i]}件</StarCounter>)
+                  :
+                  (<StarCounter><StarCountIcon/> 0件</StarCounter>)}
+              </Star>
+              <Budget>平均予算 3,000,000円(仮)</Budget>
+
+            </TextWrapper>
+          </TextLink>
+
+        </PuaCard>
+
+      )
     }
+    </div>
     <Footer/>
 
     </Fragment>

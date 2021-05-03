@@ -4,7 +4,7 @@ module Api
       before_action :setPua, only: %i[index create]
 
       def index
-        posts = pua.posts
+        posts = @pua.posts
 
         render json: {
           posts: posts
@@ -22,7 +22,7 @@ module Api
       end
 
       private
-      
+
       def setPua
         @pua = Pua.find_by(id: params[:pua_id])
       end

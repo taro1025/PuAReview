@@ -2,7 +2,9 @@ import { REQUEST_STATE } from '../constants';
 
 export const initialState = {
   fetchState: REQUEST_STATE.INITIAL,
-  puasList: [],
+  puas: [],
+  reviewsCountSet: [],
+  reviewsAverageSet: []
 };
 
 export const puasActionTypes = {
@@ -19,9 +21,13 @@ export const puasReducer = (state, action) => {
         fetchState: REQUEST_STATE.LOADING
       };
     case puasActionTypes.FETCH_SUCCESS:
+    console.log(`action:`,action)
+    console.log(`state:`,state)
       return {
         fetchState: REQUEST_STATE.OK,
-        puasList: action.payload.puas
+        puas: action.payload.puas,
+        reviewsCountSet: action.payload.reviewsCountSet,
+        reviewsAverageSet: action.payload.reviewsAverageSet
       };
     default:
       throw new Error();

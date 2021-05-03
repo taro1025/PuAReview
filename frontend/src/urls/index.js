@@ -1,4 +1,4 @@
-const DEFAULT_API_LOCALHOST = 'http://52.193.23.14/api/v1';
+const DEFAULT_API_LOCALHOST = 'http://127.0.0.1:3000/api/v1';
 
 export const puasIndex = `${DEFAULT_API_LOCALHOST}/puas`;
 export const postsIndex = (pua_id) =>
