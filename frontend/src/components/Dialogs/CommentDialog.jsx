@@ -4,8 +4,12 @@ import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import InputLabel from '@material-ui/core/InputLabel';
 import TextareaAutosize from '@material-ui/core/TextareaAutosize';
+import TextField from '@material-ui/core/TextField';
+import Typography from '@material-ui/core/Typography';
 
 import { DialogContent, Dialog, DialogTitle, DialogActions } from '@material-ui/core';
+
+import { createPost } from '../../apis/createPost.jsx';
 
 export const CommentDialog = ({
   isOpen,
@@ -19,6 +23,9 @@ export const CommentDialog = ({
     setItem(e.target.value);
     onPurpose(e.target.value);
   };
+
+  const [name, setName] = useState("")
+  const [text, setText] = useState("")
 
   return (
   <Dialog
@@ -35,21 +42,50 @@ export const CommentDialog = ({
     onChange={handleChange}
   >
   <MenuItem value="ADD_MENTER">講師の追加</MenuItem>
-  { pua_id && <MenuItem value="REVIEW">レビューを書く</MenuItem>}
+  <MenuItem value="REVIEW">レビューを書く</MenuItem>
   <MenuItem value="COMMENT">コメントを書く</MenuItem>
   </Select>
   </DialogTitle>
-  <DialogContent>
+  <form>
+    <DialogContent>
+      <Typography>ニックネーム</Typography>
+      <TextField
+        id="standard-basic"
+        label="さすらいのナンパ師"
+        value={name}
+        onChange={e => setName(e.target.value)}
+        style={{marginBottom: '20px'}}
+      />
 
-  <TextareaAutosize aria-label="minimum height" rowsMin={30} placeholder="コメントを書く" />
+    <TextareaAutosize
+      aria-label="minimum height"
+      rowsMin={30}
+      cols="35"
+      placeholder="コメントを書く"
+      value={text}
+      onChange={e => setText(e.target.value)}
+    />
+    </DialogContent>
+    <DialogActions>
 
-  </DialogContent>
+    {
+      pua_id ? (
+        <button type="submit" onClick={() => createPost({
+            name: name,
+            text: text,
+            pua_id: pua_id
+        })}>
+        送信
+        </button>
+      ):(
+        <p>コメントは講師の詳細ページから書くことができます。</p>
+      )
+    }
 
 
 
-  <DialogActions>
-  submit
-  </DialogActions>
+    </DialogActions>
+  </form>
   </Dialog>
   )
 }

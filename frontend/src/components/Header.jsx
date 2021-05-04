@@ -3,16 +3,23 @@ import {TextLink} from './links/links.jsx';
 import {CoverLink} from './header/header.jsx';
 //more smoll header
 import {
-  HeaderWrapper, HeaderIcon, HeaderIconText, HeaderIconWrapper,
- TitleHeder
+  HeaderWrapper, HeaderIconText, HeaderIconWrapper,
+ TitleHeder, HeaderIconLoggedIn, HeaderIconLoggedInYet
 } from './header/header.jsx';
 
-import { faLock } from "@fortawesome/free-solid-svg-icons";
+
+import {getLogout} from '../apis/logout.jsx';
 
 export const Header = ({
-  loggedInStatus
+  loggedInStatus,
+  setUser,
+  setLoggedInStatus
 }) => {
 
+  const handleClick = (e) =>{
+    e.preventDefault();
+    getLogout(setLoggedInStatus, setUser)
+  }
 
   return (
 
@@ -20,12 +27,24 @@ export const Header = ({
 
       <TitleHeder><TextLink to={`/puas`}>PuAログ</TextLink></TitleHeder>
 
+      {
+        loggedInStatus ? (
 
           <HeaderIconWrapper>
-            <HeaderIcon icon={faLock}/>
-            <HeaderIconText><p>{loggedInStatus}</p></HeaderIconText>
-            <CoverLink to={'/login'}/>
+            <HeaderIconLoggedIn/>
+            <HeaderIconText>ログイン中</HeaderIconText>
+            <CoverLink to="#" onClick={(e) => handleClick(e)}/>
           </HeaderIconWrapper>
+
+          ):(
+            <HeaderIconWrapper>
+              <HeaderIconLoggedInYet/>
+              <HeaderIconText>未ログイン</HeaderIconText>
+              <CoverLink to={'/login'}/>
+            </HeaderIconWrapper>
+          )
+      }
+
 
 
     </HeaderWrapper>

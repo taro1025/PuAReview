@@ -7,37 +7,31 @@ import {
 } from "react-router-dom";
 
 //components
-import Login from './components/auth/Login.jsx';
-import { Puas } from './containers/Puas.jsx';
-import { Reviews } from './containers/Reviews.jsx';
-import { Posts } from './containers/Posts.jsx';
-import { Header } from './components/Header.jsx';
 import  Registration from './components/auth/Registrations.js';
+import Login from './components/auth/Login.jsx';
 import SelectPosts from './containers/SelectPosts.jsx';
+
+import { Posts } from './containers/Posts.jsx';
+import { Puas } from './containers/Puas.jsx';
+import { SearchForm } from './containers/SearchForm.jsx';
+import { Header } from './components/Header.jsx';
+
 
 import { checkLoginStatus } from './apis/checkLoginStatus.jsx';
 
-import axios from 'axios'
-import { logged_in } from './urls/index';
 
 export const IsUserLoggedIn = createContext()
 
 function App() {
 
-  const globalInitialState = {
-    isOpenDialog: false,
-    whichPurpose: 'REVIEW', //REVIEW, COMMENT, ADD_MENTER
-    rate: 3,
-    user_id: null
-  };
-  const [state, setDialogState] = useState(globalInitialState);
 
-  const [loggedInStatus, setLoggedInStatus] = useState("未ログイン")
+
+  const [loggedInStatus, setLoggedInStatus] = useState(false)
   const [user, setUser] = useState(null)
 
   const loginAction = (props, data) => {
     //set State of Login
-    setLoggedInStatus("ログインなう")
+    setLoggedInStatus(true)
     setUser(data.user)
     //jump to top
     props.history.push("/puas")
@@ -53,6 +47,8 @@ function App() {
 
        <Header
        loggedInStatus={loggedInStatus}
+       setLoggedInStatus={setLoggedInStatus}
+       setUser={setUser}
        />
 
 
@@ -86,6 +82,12 @@ function App() {
           path="/puas"
         >
           <Puas/>
+        </Route>
+
+        <Route
+          path="/search"
+        >
+          <SearchForm/>
         </Route>
 
         <IsUserLoggedIn.Provider value={user}>

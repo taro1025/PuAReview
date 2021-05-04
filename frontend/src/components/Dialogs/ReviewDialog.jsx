@@ -46,21 +46,24 @@ export const ReviewDialog = ({
     onChange={handleChange}
   >
   <MenuItem value="ADD_MENTER">講師の追加</MenuItem>
-  { pua_id && <MenuItem value="REVIEW">レビューを書く</MenuItem>}
+  <MenuItem value="REVIEW">レビューを書く</MenuItem>
   <MenuItem value="COMMENT">コメントを書く</MenuItem>
   </Select>
   </DialogTitle>
 
   <form>
     <DialogContent>
-      <Typography>ニックネーム</Typography>
+
       <TextField
         id="standard-basic"
-        label="さすらいのナンパ師"
+        label="講師名"
         value={name}
         onChange={e => setName(e.target.value)}
+        style={{marginBottom: '20px'}}
       />
-      <Box>
+      <Box
+        style={{marginBottom: '15px'}}
+      >
         <Typography>評価</Typography>
         <Rating
           value={rate}
@@ -72,13 +75,14 @@ export const ReviewDialog = ({
     <TextareaAutosize
       aria-label="minimum height"
       rowsMin={30}
+      cols="35"
       placeholder="レビューを書く"
       value={text}
       onChange={e => setText(e.target.value)}
     />
     </DialogContent>
     <DialogActions>
-    {console.log(`user:`,user)}
+
     {
       user ? (
         <button type="submit" onClick={() => createReview({
@@ -91,6 +95,14 @@ export const ReviewDialog = ({
         </button>
       ):(
         <p>投稿するにはログインが必要です。</p>
+      )
+
+    }
+    {
+      pua_id ? (
+        <p></p>
+      ):(
+        <p>レビューは各講師のページから投稿できます。</p>
       )
     }
 

@@ -1,15 +1,6 @@
-import React, { Fragment, useEffect, useReducer, useState } from 'react';
+import React from 'react';
 
-//reducers
-import {
-  initialState,
-  postsActionTypes,
-  postReducer
-} from '../reducers/posts';
 
-import {Footer} from '../components/Footer.jsx';
-//apis
-import {fetchReviews} from '../apis/reviews';
 
 //components
 import Rating from '@material-ui/lab/Rating';

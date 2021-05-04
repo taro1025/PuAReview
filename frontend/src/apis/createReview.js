@@ -2,7 +2,6 @@ import axios from 'axios';
 import {reviewsIndex} from '../urls/index';
 
 export const createReview = (params) => {
-  console.log(`lll`,params)
   return axios.post(reviewsIndex(params.pua_id),
     {
       name: params.name,

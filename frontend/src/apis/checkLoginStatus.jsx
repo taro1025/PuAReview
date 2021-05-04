@@ -5,14 +5,14 @@ export const checkLoginStatus = (loggedInStatus, setLoggedInStatus, setUser) => 
   return axios.get(logged_in, { withCredentials: true })
     .then(response => {
       console.log(`check loggedin:`,response.data)
-      console.log(`check status:`,loggedInStatus)
-      if (response.data.logged_in && loggedInStatus === "未ログイン") {
 
-        setLoggedInStatus("ログインなう")
+      if (response.data.logged_in && loggedInStatus === false) {
+
+        setLoggedInStatus(true)
         setUser(response.data.user)
-      } else if (!response.data.logged_in && loggedInStatus === "ログインなう") {
+      } else if (!response.data.logged_in && loggedInStatus === true) {
 
-        setLoggedInStatus("未ログイン")
+        setLoggedInStatus(false)
         setUser({})
       }
     })

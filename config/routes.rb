@@ -11,7 +11,7 @@ Rails.application.routes.draw do
       end
       resource :user, only: %i[new create]
       post 'login' => 'users#login'
-      get 'logout' => 'users#logout'
+      delete 'logout' => 'users#logout'
       get 'logged_in' => 'users#logged_in'
     end
   end

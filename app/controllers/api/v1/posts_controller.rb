@@ -12,7 +12,7 @@ module Api
       end
 
       def create
-        post = pua.posts.new(name: params[:name], text: params[:text])
+        post = @pua.posts.new(name: params[:name], text: params[:text])
 
         if post.save
           render json: {}, status: :no_content

@@ -1,7 +1,10 @@
-import {COLORS, WRAPPER_SIZE, FONT_SIZE} from '../../style_constants'
+import {COLORS} from '../../style_constants'
 import styled from 'styled-components';
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
 import { Link } from "react-router-dom";
+
+import LockOpenIcon from '@material-ui/icons/LockOpen';
+import LockIcon from '@material-ui/icons/Lock';
 
 export const HeaderWrapper = styled.header`
   height: 48px;
@@ -21,10 +24,13 @@ export const HeaderIconWrapper = styled.div`
   margin-right: 10px;
   position: relative;
 `;
-export const HeaderIcon = styled(FontAwesomeIcon)`
-  position: relative;
-  color: #e7e7e7;
-  font-size: 30px;
+
+export const HeaderIconLoggedIn = styled(LockOpenIcon)`
+  margin-top: 7px;
+`;
+
+export const HeaderIconLoggedInYet = styled(LockIcon)`
+  margin-top: 7px;
 `;
 
 export const HeaderIconText = styled.p`

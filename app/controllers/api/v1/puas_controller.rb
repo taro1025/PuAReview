@@ -16,7 +16,7 @@ module Api
       end
 
       def create
-        pua = Pua.new(name: params[:pua_name], sex: params[:sex], twitterAccountUrl: params[:twitterAccountUrl])
+        pua = Pua.new(name: params[:name], sex: params[:sex], twitterAccountUrl: params[:twitterAccountUrl])
 
         if pua.save
           render json: {}, status: :no_content
@@ -27,9 +27,15 @@ module Api
 
       def search
         searchedPuas = Pua.where("name LIKE ?", "%#{params[:name]}")
+
+        reviewsCountSet = reviewsCountSet(searchedPuas)
+        reviewsAverageSet = reviewsAverageSet(searchedPuas)
+
         if searchedPuas
           render json: {
-            searchedPuas: searchedPuas
+            searchedPuas: searchedPuas,
+            reviewsCountSet: reviewsCountSet,
+            reviewsAverageSet: reviewsAverageSet
           }, status: :ok
         else
           render json: {}, status: :no_content
@@ -45,7 +51,7 @@ module Api
       def reviewsAverageSet(puas)
         puas.map do |pua|
           average = pua.reviews.average(:star)
-          average.floor(2) if average
+          average.to_f.floor(2) if average
         end
       end
 

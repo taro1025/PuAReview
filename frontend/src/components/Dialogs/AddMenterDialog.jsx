@@ -3,9 +3,11 @@ import React, {useState} from 'react';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import InputLabel from '@material-ui/core/InputLabel';
-import TextareaAutosize from '@material-ui/core/TextareaAutosize';
+import TextField from '@material-ui/core/TextField';
 
 import { DialogContent, Dialog, DialogTitle, DialogActions } from '@material-ui/core';
+
+import { addPua } from '../../apis/AddPua.jsx';
 
 export const AddMenterDialog = ({
   isOpen,
@@ -19,6 +21,10 @@ export const AddMenterDialog = ({
     setItem(e.target.value);
     onPurpose(e.target.value);
   };
+  //states of Contents
+  const [name, setName] = useState("")
+  const [sex, setSex] = useState(1)
+  const [twitterAccountUrl, setTwitterAccountUrl] = useState("")
 
   return (
   <Dialog
@@ -35,21 +41,49 @@ export const AddMenterDialog = ({
     onChange={handleChange}
   >
   <MenuItem value="ADD_MENTER">講師の追加</MenuItem>
-  { pua_id && <MenuItem value="REVIEW">レビューを書く</MenuItem>}
+  <MenuItem value="REVIEW">レビューを書く</MenuItem>
   <MenuItem value="COMMENT">コメントを書く</MenuItem>
   </Select>
   </DialogTitle>
-  <DialogContent>
+  <form>
+    <DialogContent>
 
-  <TextareaAutosize aria-label="minimum height" rowsMin={30} placeholder="レビューを書く" />
+      <TextField
+        id="standard-basic"
+        label="講師名"
+        value={name}
+        onChange={e => setName(e.target.value)}
+      />
+      <Select
+        labelId="select-label"
+        value={sex}
+        onChange={e => setSex(e.target.value)}
+      >
+      <MenuItem value="1">男性</MenuItem>
+      <MenuItem value="0">女性</MenuItem>
+      </Select>
 
-  </DialogContent>
+      <TextField
+        id="standard-basic"
+        label="講師のTwitter URL"
+        value={twitterAccountUrl}
+        onChange={e => setTwitterAccountUrl(e.target.value)}
+      />
+    </DialogContent>
+    <DialogActions>
 
 
+        <button type="submit" onClick={() => addPua({
+          name: name,
+          sex: sex,
+          twitterAccountUrl: twitterAccountUrl,
+        })}>
+        送信
+        </button>
 
-  <DialogActions>
-  submit
-  </DialogActions>
+
+    </DialogActions>
+  </form>
   </Dialog>
   )
 }

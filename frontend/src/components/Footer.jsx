@@ -1,8 +1,7 @@
 import React, {useState} from 'react';
 import {useParams} from "react-router-dom";
 //Material UIs
-import { faHome, faSearch, faLock } from "@fortawesome/free-solid-svg-icons";
-import { faEdit } from "@fortawesome/free-regular-svg-icons";
+
 import { BottomNavigation, BottomNavigationAction } from '@material-ui/core';
 import { Search, Home, LibraryAdd } from '@material-ui/icons';
 
@@ -13,7 +12,7 @@ export const Footer = () => {
 
   const initialStateDialog = {
     isOpenDialog: false,
-    whichPurpose: 'COMMENT', //REVIEW, COMMENT, ADD_MENTER
+    whichPurpose: 'REVIEW', //REVIEW, COMMENT, ADD_MENTER
     rate: 3
   };
 
@@ -33,7 +32,7 @@ export const Footer = () => {
         ...state,
         isOpenDialog: true})}
      />
-    <BottomNavigationAction label="search" icon={<Search />} />
+    <BottomNavigationAction label="search" icon={<Search />} component={TextLink} to={`/search`} />
   </BottomNavigation>
   {
     state.isOpenDialog &&

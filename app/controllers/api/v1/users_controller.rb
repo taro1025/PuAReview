@@ -30,9 +30,10 @@ module Api
       end
 
       def logout
-        session[:user_id] = nil
+        session.delete(:user_id)
 
-        render json: {}, status: :ok
+        puts "user:#{session[:user_id]}"
+        render json: { logged_in: false}, status: :ok
       end
 
       def logged_in
